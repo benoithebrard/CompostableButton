@@ -2,11 +2,15 @@ package com.example.compostablebutton
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,14 +48,24 @@ fun CompostButton(
             disabledElevation = 0.dp
         )
     ) {
-        Text(
-            text = "Click Me",
-            fontSize = 20.sp
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Click Me",
+                fontSize = 10.sp
+            )
+
+            Text(
+                text = "Bitch!",
+                fontSize = 10.sp
+            )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 150)
 @Composable
 fun DefaultPreview() {
     CompostableButtonTheme {
@@ -59,7 +73,7 @@ fun DefaultPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 200)
 @Composable
 fun ContainerEmptyPreview() {
     CompostableButtonTheme {
@@ -67,7 +81,7 @@ fun ContainerEmptyPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 250)
 @Composable
 fun ContainerFullPreview() {
     CompostableButtonTheme {
