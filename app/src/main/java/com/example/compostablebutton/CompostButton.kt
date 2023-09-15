@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -53,17 +54,21 @@ fun CompostButton(
         ) {
             Box(Modifier.weight(1f)) {
                 Text(
-                    text = "Click Me sdfhjshfjdshfjds",
+                    text = "Compost some $compostType",
                     fontSize = 10.sp,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    fontWeight = FontWeight.Medium,
+                    color = containerState.nameColor
                 )
             }
             Spacer(modifier = Modifier.size(4.dp))
             Box {
                 Text(
-                    text = "Bitch!",
-                    fontSize = 10.sp
+                    text = "56% full",
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = containerState.valueColor
                 )
             }
         }
