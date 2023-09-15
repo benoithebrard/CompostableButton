@@ -3,6 +3,7 @@ package com.example.compostablebutton
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,10 +25,19 @@ fun CompostButton(
 
     OutlinedButton(
         onClick = {
-            Toast.makeText(contextForToast, "Added $compostType to compost", Toast.LENGTH_SHORT).show()
+            Toast.makeText(contextForToast, "Added $compostType to compost", Toast.LENGTH_SHORT)
+                .show()
         },
-        shape = RoundedCornerShape(size = 4.dp),
-        border = BorderStroke(width = 1.dp, color = containerState.outlineColor)
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = containerState.containerColor
+        ),
+        shape = RoundedCornerShape(
+            size = 4.dp
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = containerState.outlineColor
+        )
     ) {
         Text(
             text = "Click Me",
