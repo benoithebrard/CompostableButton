@@ -26,11 +26,11 @@ fun CompostButton(
     val contextForToast = LocalContext.current.applicationContext
 
     OutlinedButton(
+        enabled = containerState != ContainerState.Empty,
         onClick = {
             Toast.makeText(contextForToast, "Added $compostType to compost", Toast.LENGTH_SHORT)
                 .show()
         },
-        enabled = containerState != ContainerState.Empty,
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = containerState.containerColor,
             disabledContainerColor = ContainerState.Empty.containerColor
@@ -45,14 +45,15 @@ fun CompostButton(
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 3.dp,
             disabledElevation = 0.dp
-        )
+        ),
+        contentPadding = PaddingValues(all = 4.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
             Box(Modifier.weight(1f)) {
                 Text(
-                    text = "Click Me",
+                    text = "Click Me sdfhjshfjdshfjds",
                     fontSize = 10.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
