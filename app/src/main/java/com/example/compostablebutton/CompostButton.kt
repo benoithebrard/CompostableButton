@@ -7,7 +7,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,21 +27,26 @@ fun CompostButton(
             Toast.makeText(contextForToast, "Added $compostType to compost", Toast.LENGTH_SHORT)
                 .show()
         },
+        enabled = containerState != ContainerState.Empty,
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = containerState.containerColor
+            containerColor = containerState.containerColor,
+            disabledContainerColor = ContainerState.Empty.containerColor
         ),
         shape = RoundedCornerShape(
             size = 4.dp
         ),
         border = BorderStroke(
-            width = 1.dp,
+            width = .5.dp,
             color = containerState.outlineColor
+        ),
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 3.dp,
+            disabledElevation = 0.dp
         )
     ) {
         Text(
             text = "Click Me",
-            fontSize = 20.sp,
-            color = Color.Green
+            fontSize = 20.sp
         )
     }
 }
