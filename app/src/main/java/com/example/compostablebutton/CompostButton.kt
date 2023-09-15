@@ -22,7 +22,7 @@ import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 fun CompostButton(
     containerState: ContainerState = ContainerState.Loading,
     compostType: String = "apples",
-    percentFull: Float = 0f
+    percentFull: Int = 0
 ) {
     val contextForToast = LocalContext.current.applicationContext
 
@@ -65,7 +65,7 @@ fun CompostButton(
             Spacer(modifier = Modifier.size(4.dp))
             Box {
                 Text(
-                    text = "56% full",
+                    text = "$percentFull% full",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     color = containerState.valueColor
@@ -79,7 +79,9 @@ fun CompostButton(
 @Composable
 fun DefaultPreview() {
     CompostableButtonTheme {
-        CompostButton()
+        CompostButton(
+            percentFull = 56
+        )
     }
 }
 
@@ -87,7 +89,10 @@ fun DefaultPreview() {
 @Composable
 fun ContainerEmptyPreview() {
     CompostableButtonTheme {
-        CompostButton(containerState = ContainerState.Empty)
+        CompostButton(
+            containerState = ContainerState.Empty,
+            percentFull = 13
+        )
     }
 }
 
@@ -95,6 +100,9 @@ fun ContainerEmptyPreview() {
 @Composable
 fun ContainerFullPreview() {
     CompostableButtonTheme {
-        CompostButton(containerState = ContainerState.Full)
+        CompostButton(
+            containerState = ContainerState.Full,
+            percentFull = 87
+        )
     }
 }
