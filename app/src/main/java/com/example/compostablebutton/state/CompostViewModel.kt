@@ -2,6 +2,9 @@ package com.example.compostablebutton.state
 
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CompostViewModel : ViewModel() {
     /**
@@ -24,6 +27,18 @@ class CompostViewModel : ViewModel() {
             pile.percentFull += percentChange
             pile.percentFull = pile.percentFull.coerceIn(0, 100)
         }
+
+    init {
+        viewModelScope.launch {
+            while (true) {
+                delay((1000L..3000L).random())
+                _piles.forEach { pile ->
+                    pile.percentFull -= (5..20).random()
+                    pile.percentFull = pile.percentFull.coerceIn(0, 100)
+                }
+            }
+        }
+    }
 }
 
 private fun getCompostPiles() = listOf(
