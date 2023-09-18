@@ -3,13 +3,15 @@ package com.example.compostablebutton
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.compostablebutton.ui.CompostButton
 import com.example.compostablebutton.ui.StatefulCompostButton
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
@@ -20,7 +22,7 @@ class MainActivity : ComponentActivity() {
             CompostableButtonTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                  modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column(
@@ -28,7 +30,11 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier.padding(horizontal = 100.dp)
                     ) {
-                        StatefulCompostButton()
+                        StatefulCompostButton(pileId = "0")
+                        StatefulCompostButton(pileId = "1")
+                        StatefulCompostButton(pileId = "2")
+                        StatefulCompostButton(pileId = "3")
+                        StatefulCompostButton(pileId = "4")
                     }
                 }
             }

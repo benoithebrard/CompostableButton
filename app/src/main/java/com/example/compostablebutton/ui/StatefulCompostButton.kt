@@ -33,13 +33,13 @@ import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 @Composable
 fun StatefulCompostButton(
     modifier: Modifier = Modifier,
-    id: String = "0",
+    pileId: String = "0",
     viewModel: CompostViewModel = viewModel()
 ) {
     val context = LocalContext.current
     var toast: Toast? by rememberSaveable { mutableStateOf(null) }
 
-    viewModel.getPileOrNull(id)?.let { pile ->
+    viewModel.getPileOrNull(pileId)?.let { pile ->
         CompostButton(
             modifier = modifier,
             name = pile.name,
