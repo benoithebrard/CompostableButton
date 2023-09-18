@@ -1,8 +1,8 @@
-package com.example.compostablebutton.ui.state
+package com.example.compostablebutton.state
 
 import androidx.compose.ui.graphics.Color
 
-enum class ContainerState(
+enum class CompostContainer(
     val containerColor: Color,
     val outlineColor: Color,
     val nameColor: Color,

@@ -1,6 +1,5 @@
-package com.example.compostablebutton
+package com.example.compostablebutton.ui
 
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,39 +8,39 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.compostablebutton.ui.state.ContainerState
+import com.example.compostablebutton.state.CompostContainer
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
 @Composable
 fun CompostButton(
-    containerState: ContainerState = ContainerState.Loading,
-    compostType: String = "apples",
-    percentFull: Int = 0
+    name: String = "apples",
+    percentFull: Int = 0,
+    onAddCompost: () -> Unit = {}
 ) {
-    val contextForToast = LocalContext.current.applicationContext
+    val compostContainer: CompostContainer = when {
+        percentFull < 20 -> CompostContainer.Empty
+        percentFull < 70 -> CompostContainer.Loading
+        else -> CompostContainer.Full
+    }
 
     OutlinedButton(
-        enabled = containerState != ContainerState.Empty,
-        onClick = {
-            Toast.makeText(contextForToast, "Added $compostType to compost", Toast.LENGTH_SHORT)
-                .show()
-        },
+        enabled = true,//compostContainer != CompostContainer.Empty,
+        onClick = onAddCompost,
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = containerState.containerColor,
-            disabledContainerColor = ContainerState.Empty.containerColor
+            containerColor = compostContainer.containerColor,
+            disabledContainerColor = CompostContainer.Empty.containerColor
         ),
         shape = RoundedCornerShape(
             size = 4.dp
         ),
         border = BorderStroke(
             width = .5.dp,
-            color = containerState.outlineColor
+            color = compostContainer.outlineColor
         ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 3.dp,
@@ -54,21 +53,21 @@ fun CompostButton(
         ) {
             Box(Modifier.weight(1f)) {
                 Text(
-                    text = "Compost some $compostType",
+                    text = "Compost some $name",
                     fontSize = 10.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     fontWeight = FontWeight.Medium,
-                    color = containerState.nameColor
+                    color = compostContainer.nameColor
                 )
             }
             Spacer(modifier = Modifier.size(4.dp))
             Box {
                 Text(
-                    text = "$percentFull% full",
+                    text = "$percentFull%",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
-                    color = containerState.valueColor
+                    color = compostContainer.valueColor
                 )
             }
         }
@@ -90,7 +89,6 @@ fun DefaultPreview() {
 fun ContainerEmptyPreview() {
     CompostableButtonTheme {
         CompostButton(
-            containerState = ContainerState.Empty,
             percentFull = 13
         )
     }
@@ -101,7 +99,6 @@ fun ContainerEmptyPreview() {
 fun ContainerFullPreview() {
     CompostableButtonTheme {
         CompostButton(
-            containerState = ContainerState.Full,
             percentFull = 87
         )
     }
