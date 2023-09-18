@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.compostablebutton.ui.CompostButton
+import com.example.compostablebutton.ui.StatefulCompostButton
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,16 +20,15 @@ class MainActivity : ComponentActivity() {
             CompostableButtonTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                  modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(horizontal = 100.dp)
                     ) {
-                        CompostButton()
-                        Spacer(modifier = Modifier.size(10.dp))
-                        CompostButton()
+                        StatefulCompostButton()
                     }
                 }
             }

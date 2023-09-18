@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 data class CompostPileState(
     val id: String,
     val name: String,
-    val initialPercentFull: Int = 23
+    val initialPercentFull: Int = 0
 ) {
     var percentFull: Int by mutableStateOf(initialPercentFull)
 }

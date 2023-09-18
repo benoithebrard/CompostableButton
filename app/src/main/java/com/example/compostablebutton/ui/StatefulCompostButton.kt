@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compostablebutton.state.CompostViewModel
+import com.example.compostablebutton.state.toContainerState
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
 @Composable
@@ -30,7 +31,11 @@ fun StatefulCompostButton(
     viewModel: CompostViewModel = viewModel()
 ) {
     viewModel.getPileOrNull(id)?.let { pile ->
-        CompostButton(pile.name, pile.percentFull) {
+        CompostButton(
+            name = pile.name,
+            percentFull = pile.percentFull,
+            containerState = pile.toContainerState()
+        ) {
             viewModel.changePilePercentFull(pile, +25)
         }
     } ?: Text(text = "something bad happened..")
