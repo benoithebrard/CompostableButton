@@ -18,6 +18,7 @@ import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
 @Composable
 fun CompostButton(
+    modifier: Modifier = Modifier,
     name: String = "apples",
     percentFull: Int = 0,
     containerState: CompostContainerState = CompostContainerState.Loading,
@@ -41,7 +42,7 @@ fun CompostButton(
             defaultElevation = 3.dp,
             disabledElevation = 0.dp
         ),
-        modifier = Modifier.sizeIn(minHeight = 32.dp),
+        modifier = modifier.sizeIn(minHeight = 32.dp),
         contentPadding = PaddingValues(all = 4.dp)
     ) {
         Row(

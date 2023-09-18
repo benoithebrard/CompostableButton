@@ -7,31 +7,30 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CompostViewModel : ViewModel() {
-    /**
-     * Don't expose the mutable list of tasks from outside the ViewModel.
-     * Instead define _tasks and tasks. _tasks is internal and mutable inside the ViewModel.
-     * tasks is public and read-only.
-     */
+
     private val _piles = getCompostPiles().toMutableStateList()
     val piles: List<CompostPileState>
         get() = _piles
 
-    fun getPileOrNull(pileId: String): CompostPileState? = _piles.find { it.id == pileId }
-
-    fun remove(item: CompostPileState) {
-        _piles.remove(item)
+    fun removePile(pile: CompostPileState) {
+        _piles.remove(pile)
     }
 
-    fun changePilePercentFull(item: CompostPileState, percentChange: Int) =
-        _piles.find { it.id == item.id }?.let { pile ->
-            pile.percentFull += percentChange
+    fun getPileOrNull(pileId: String): CompostPileState? {
+        return _piles.find { it.id == pileId }
+    }
+
+    fun changePilePercent(pileId: String, percentDelta: Int) {
+        getPileOrNull(pileId)?.let { pile ->
+            pile.percentFull += percentDelta
             pile.percentFull = pile.percentFull.coerceIn(0, 100)
         }
+    }
 
     init {
         viewModelScope.launch {
             while (true) {
-                delay((1000L..3000L).random())
+                delay((2000L..5000L).random())
                 _piles.forEach { pile ->
                     pile.percentFull -= (5..20).random()
                     pile.percentFull = pile.percentFull.coerceIn(0, 100)

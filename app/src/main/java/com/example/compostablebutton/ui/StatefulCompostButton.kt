@@ -15,9 +15,15 @@
  */
 package com.example.compostablebutton.ui
 
+import android.widget.Toast
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compostablebutton.state.CompostViewModel
@@ -30,13 +36,22 @@ fun StatefulCompostButton(
     id: String = "0",
     viewModel: CompostViewModel = viewModel()
 ) {
+    val context = LocalContext.current
+    var toast: Toast? by rememberSaveable { mutableStateOf(null) }
+
     viewModel.getPileOrNull(id)?.let { pile ->
         CompostButton(
+            modifier = modifier,
             name = pile.name,
             percentFull = pile.percentFull,
             containerState = pile.toContainerState()
         ) {
-            viewModel.changePilePercentFull(pile, +25)
+            val percentAdded = (10..25).random()
+            viewModel.changePilePercent(pile.id, percentAdded)
+            toast?.cancel()
+            toast =
+                Toast.makeText(context, "Added $percentAdded% of ${pile.name}", Toast.LENGTH_SHORT)
+            toast?.show()
         }
     } ?: Text(text = "something bad happened..")
 }
