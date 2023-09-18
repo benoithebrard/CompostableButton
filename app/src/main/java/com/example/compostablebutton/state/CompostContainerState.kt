@@ -9,7 +9,7 @@ enum class CompostContainerState(
     val valueColor: Color
 ) {
 
-    // between 0% and 50% of compost
+    // add more compost
     Loading(
         Color(0xffFFFFFF),
         Color(0xffE1E1E5),
@@ -17,7 +17,7 @@ enum class CompostContainerState(
         Color(0xff073BC5)
     ),
 
-    // between 50% and 90% of compost
+    // perfect balance
     Optimal(
         Color(0xff109877),
         Color(0xff007054),
@@ -25,7 +25,7 @@ enum class CompostContainerState(
         Color(0xffFFFFFF)
     ),
 
-    // more than 90% of compost
+    // stop adding compost
     Full(
         Color(0xffF0F0F2),
         Color(0xffE1E1E5),
@@ -36,7 +36,7 @@ enum class CompostContainerState(
 }
 
 fun CompostPileState.toContainerState(): CompostContainerState = when {
-    percentFull < 50 -> CompostContainerState.Loading
-    percentFull < 90 -> CompostContainerState.Optimal
+    percentFull < 65 -> CompostContainerState.Loading
+    percentFull < 85 -> CompostContainerState.Optimal
     else -> CompostContainerState.Full
 }
