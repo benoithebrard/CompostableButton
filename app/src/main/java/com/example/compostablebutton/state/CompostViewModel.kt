@@ -9,10 +9,10 @@ import kotlinx.coroutines.launch
 class CompostViewModel : ViewModel() {
 
     private val _piles = createPiles().toMutableStateList()
-    val piles: List<CompostPile>
+    val piles: List<PileState>
         get() = _piles
 
-    fun getPileOrNull(pileId: String): CompostPile? {
+    fun getPileOrNull(pileId: String): PileState? {
         return _piles.find { it.id == pileId }
     }
 
@@ -40,10 +40,10 @@ class CompostViewModel : ViewModel() {
     }
 
     private fun createPiles() = listOf(
-        CompostPile("0", "apples"),
-        CompostPile("1", "bananas"),
-        CompostPile("2", "kiwis"),
-        CompostPile("3", "bread"),
-        CompostPile("4", "coffee")
+        PileState("0", "apples"),
+        PileState("1", "bananas"),
+        PileState("2", "kiwis"),
+        PileState("3", "bread"),
+        PileState("4", "coffee")
     )
 }

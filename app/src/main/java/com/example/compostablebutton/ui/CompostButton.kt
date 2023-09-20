@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.compostablebutton.state.CompostContainerState
+import com.example.compostablebutton.state.ContainerState
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
 @Composable
@@ -21,15 +21,15 @@ fun CompostButton(
     modifier: Modifier = Modifier,
     name: String = "apples",
     percentFull: Int = 0,
-    containerState: CompostContainerState = CompostContainerState.Loading,
+    containerState: ContainerState = ContainerState.Loading,
     onAddCompost: () -> Unit = {}
 ) {
     OutlinedButton(
-        enabled = containerState != CompostContainerState.Full,
+        enabled = containerState != ContainerState.Full,
         onClick = onAddCompost,
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = containerState.containerColor,
-            disabledContainerColor = CompostContainerState.Full.containerColor
+            disabledContainerColor = ContainerState.Full.containerColor
         ),
         shape = RoundedCornerShape(
             size = 4.dp

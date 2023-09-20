@@ -12,7 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.compostablebutton.ui.StatefulCompostButton
+import com.example.compostablebutton.ui.StatefulCompostPile
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,13 +28,13 @@ class MainActivity : ComponentActivity() {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(horizontal = 100.dp)
+                        modifier = Modifier.padding(horizontal = 10.dp)
                     ) {
-                        StatefulCompostButton(pileId = "0")
-                        StatefulCompostButton(pileId = "1")
-                        StatefulCompostButton(pileId = "2")
-                        StatefulCompostButton(pileId = "3")
-                        StatefulCompostButton(pileId = "4")
+                        StatefulCompostPile(pileId = "0")
+                        StatefulCompostPile(pileId = "1")
+                        StatefulCompostPile(pileId = "2")
+                        StatefulCompostPile(pileId = "3")
+                        StatefulCompostPile(pileId = "4")
                     }
                 }
             }

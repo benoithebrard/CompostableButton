@@ -16,6 +16,7 @@
 package com.example.compostablebutton.ui
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,7 +42,7 @@ fun StatefulCompostButton(
 
     viewModel.getPileOrNull(pileId)?.let { pile ->
         CompostButton(
-            modifier = modifier,
+            modifier = modifier.fillMaxWidth(),
             name = pile.name,
             percentFull = pile.percentFull,
             containerState = pile.toContainerState()
