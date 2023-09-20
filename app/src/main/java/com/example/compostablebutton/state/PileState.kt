@@ -11,10 +11,4 @@ data class PileState(
     var percentFull: Int by mutableStateOf(0)
 
     var percentDecay: Int by mutableStateOf(0)
-
-    internal fun simulateDecay(deltaDecay: Int) {
-        percentDecay += deltaDecay
-        percentFull -= deltaDecay
-        percentFull = percentFull.coerceIn(0, 100)
-    }
 }

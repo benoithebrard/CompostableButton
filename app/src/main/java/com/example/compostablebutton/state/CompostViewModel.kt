@@ -34,8 +34,12 @@ class CompostViewModel : ViewModel() {
 
     private fun simulateDecay() {
         _piles.forEach { pile ->
-            val deltaDecay = (5..20).random()
-            pile.simulateDecay(deltaDecay)
+            val deltaDecay = (5..20).random().takeIf { pile.percentFull > it } ?: 0
+            pile.apply {
+                percentDecay += deltaDecay
+                percentFull -= deltaDecay
+                percentFull = percentFull.coerceIn(0, 100)
+            }
         }
     }
 

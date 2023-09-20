@@ -34,7 +34,7 @@ enum class ContainerState(
         Color(0xffE1E1E5),
         Color(0xffB4B4BF),
         Color(0xffB4B4BF),
-        3
+        1
     )
 
 }
