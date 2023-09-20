@@ -35,7 +35,7 @@ enum class CompostContainerState(
 
 }
 
-fun CompostPileState.toContainerState(): CompostContainerState = when {
+fun CompostPile.toContainerState(): CompostContainerState = when {
     percentFull < 65 -> CompostContainerState.Loading
     percentFull < 85 -> CompostContainerState.Optimal
     else -> CompostContainerState.Full
