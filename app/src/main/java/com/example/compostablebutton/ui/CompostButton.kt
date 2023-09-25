@@ -1,22 +1,23 @@
 package com.example.compostablebutton.ui
 
-import android.widget.Toast
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compostablebutton.state.ContainerState
+import com.example.compostablebutton.state.PercentFullState
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
 @Composable
@@ -25,33 +26,16 @@ fun CompostButton(
     name: String = "apples",
     percentFull: Int = 0,
     containerState: ContainerState = ContainerState.Loading,
+    percentFullState: PercentFullState = PercentFullState.Default,
     onAddCompost: () -> Unit = {}
 ) {
-    val context = LocalContext.current
-    var toast: Toast? by rememberSaveable { mutableStateOf(null) }
-    var savedPercentFull by remember { mutableStateOf(0) }
-
-    when {
-        percentFull > savedPercentFull -> {
-            toast?.cancel()
-            toast =
-                Toast.makeText(context, "$savedPercentFull >> $percentFull", Toast.LENGTH_SHORT)
-            toast?.show()
+    val valueColor by animateColorAsState(
+        when (percentFullState) {
+            PercentFullState.Default -> Color(0xFF6200EE)
+            PercentFullState.Increasing -> Color(0xFFFFB300)
+            PercentFullState.Decreasing -> Color(0xFF03DAC5)
         }
-        percentFull < savedPercentFull -> {
-            toast?.cancel()
-            toast =
-                Toast.makeText(
-                    context,
-                    "$percentFull << $savedPercentFull",
-                    Toast.LENGTH_SHORT
-                )
-            toast?.show()
-        }
-        else -> {}
-    }
-
-    savedPercentFull = percentFull
+    )
 
     OutlinedButton(
         enabled = containerState != ContainerState.Full,
@@ -93,7 +77,7 @@ fun CompostButton(
                     text = "$percentFull%",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
-                    color = containerState.valueColor
+                    color = valueColor
                 )
             }
         }
@@ -105,7 +89,8 @@ fun CompostButton(
 fun DefaultPreview() {
     CompostableButtonTheme {
         CompostButton(
-            percentFull = 56
+            percentFull = 56,
+            percentFullState = PercentFullState.Default
         )
     }
 }
@@ -115,7 +100,8 @@ fun DefaultPreview() {
 fun ContainerEmptyPreview() {
     CompostableButtonTheme {
         CompostButton(
-            percentFull = 13
+            percentFull = 13,
+            percentFullState = PercentFullState.Increasing
         )
     }
 }
@@ -125,7 +111,8 @@ fun ContainerEmptyPreview() {
 fun ContainerFullPreview() {
     CompostableButtonTheme {
         CompostButton(
-            percentFull = 87
+            percentFull = 87,
+            percentFullState = PercentFullState.Decreasing
         )
     }
 }

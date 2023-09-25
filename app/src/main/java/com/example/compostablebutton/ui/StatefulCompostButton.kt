@@ -36,6 +36,7 @@ fun StatefulCompostButton(
             modifier = modifier.fillMaxWidth(),
             name = pile.name,
             percentFull = pile.percentFull,
+            percentFullState = pile.percentFullState,
             containerState = pile.toContainerState()
         ) {
             val percentAdded = (10..25).random()

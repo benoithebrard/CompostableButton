@@ -17,16 +17,13 @@ class CompostViewModel : ViewModel() {
     }
 
     fun changePilePercent(pileId: String, percentDelta: Int) {
-        getPileOrNull(pileId)?.let { pile ->
-            pile.percentFull += percentDelta
-            pile.percentFull = pile.percentFull.coerceIn(0, 100)
-        }
+        getPileOrNull(pileId)?.changePercentFullBy(percentDelta)
     }
 
     init {
         viewModelScope.launch {
             while (true) {
-                delay((2000L..5000L).random())
+                delay((10000L..15000L).random())
                 simulateDecay()
             }
         }
@@ -40,8 +37,7 @@ class CompostViewModel : ViewModel() {
 
             pile.apply {
                 percentDecay += deltaDecay
-                percentFull -= deltaDecay
-                percentFull = percentFull.coerceIn(0, 100)
+                changePercentFullBy(-deltaDecay)
             }
         }
     }
