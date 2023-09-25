@@ -31,9 +31,9 @@ fun CompostButton(
 ) {
     val valueColor by animateColorAsState(
         when (percentFullState) {
-            PercentFullState.Default -> Color(0xFF6200EE)
-            PercentFullState.Increasing -> Color(0xFFFFB300)
-            PercentFullState.Decreasing -> Color(0xFF03DAC5)
+            PercentFullState.Default -> containerState.valueColor
+            PercentFullState.Increasing -> Color(0xFF109877)
+            PercentFullState.Decreasing -> Color(0xFFD03A3A)
         }
     )
 
