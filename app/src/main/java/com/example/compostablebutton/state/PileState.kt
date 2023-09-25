@@ -21,7 +21,7 @@ data class PileState(
 
     var percentDecay: Int by mutableStateOf(0)
 
-    var lastAnimationResetJob: Job? by mutableStateOf(null)
+    private var lastAnimationResetJob: Job? by mutableStateOf(null)
 
     fun changePercentFullBy(scope: CoroutineScope, deltaPercent: Int) {
         val previousPercentFull = percentFull
