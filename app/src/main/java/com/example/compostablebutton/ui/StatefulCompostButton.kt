@@ -17,6 +17,7 @@ package com.example.compostablebutton.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,6 +31,8 @@ fun StatefulCompostButton(
     pileId: String = "0",
     viewModel: CompostViewModel = viewModel()
 ) {
+    val scope = rememberCoroutineScope()
+
     StatefulPile(pileId) { pile ->
         CompostButton(
             modifier = modifier.fillMaxWidth(),
@@ -39,7 +42,7 @@ fun StatefulCompostButton(
             containerState = pile.toContainerState()
         ) {
             val percentAdded = (10..25).random()
-            viewModel.changePilePercent(pile.id, percentAdded)
+            viewModel.changePilePercent(scope, pile.id, percentAdded)
         }
     }
 }

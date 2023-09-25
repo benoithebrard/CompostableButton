@@ -3,6 +3,7 @@ package com.example.compostablebutton.state
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -16,20 +17,20 @@ class CompostViewModel : ViewModel() {
         return _piles.find { it.id == pileId }
     }
 
-    fun changePilePercent(pileId: String, percentDelta: Int) {
-        getPileOrNull(pileId)?.changePercentFullBy(percentDelta)
+    fun changePilePercent(scope: CoroutineScope, pileId: String, percentDelta: Int) {
+        getPileOrNull(pileId)?.changePercentFullBy(scope, percentDelta)
     }
 
     init {
         viewModelScope.launch {
             while (true) {
                 delay((10000L..15000L).random())
-                simulateDecay()
+                simulateDecay(this)
             }
         }
     }
 
-    private fun simulateDecay() {
+    private fun simulateDecay(scope: CoroutineScope) {
         _piles.forEach { pile ->
             val deltaDecay = (5..20).random().takeIf { decay ->
                 pile.percentFull > decay
@@ -37,7 +38,7 @@ class CompostViewModel : ViewModel() {
 
             pile.apply {
                 percentDecay += deltaDecay
-                changePercentFullBy(-deltaDecay)
+                changePercentFullBy(scope, -deltaDecay)
             }
         }
     }
