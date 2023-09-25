@@ -1,13 +1,16 @@
 package com.example.compostablebutton.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +27,32 @@ fun CompostButton(
     containerState: ContainerState = ContainerState.Loading,
     onAddCompost: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    var toast: Toast? by rememberSaveable { mutableStateOf(null) }
+    var savedPercentFull by remember { mutableStateOf(0) }
+
+    when {
+        percentFull > savedPercentFull -> {
+            toast?.cancel()
+            toast =
+                Toast.makeText(context, "$savedPercentFull >> $percentFull", Toast.LENGTH_SHORT)
+            toast?.show()
+        }
+        percentFull < savedPercentFull -> {
+            toast?.cancel()
+            toast =
+                Toast.makeText(
+                    context,
+                    "$percentFull << $savedPercentFull",
+                    Toast.LENGTH_SHORT
+                )
+            toast?.show()
+        }
+        else -> {}
+    }
+
+    savedPercentFull = percentFull
+
     OutlinedButton(
         enabled = containerState != ContainerState.Full,
         onClick = onAddCompost,
