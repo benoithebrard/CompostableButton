@@ -1,6 +1,8 @@
 package com.example.compostablebutton.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,12 +16,10 @@ fun CompostPile(
     pileId: String = "0"
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxWidth()
+        verticalAlignment = Alignment.CenterVertically
     ) {
         StatefulCompostButton(modifier.width(150.dp), pileId)
-        Spacer(Modifier.width(4.dp))
+        Spacer(Modifier.width(10.dp))
         StatefulCompostInfo(modifier, pileId)
     }
 

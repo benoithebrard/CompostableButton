@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,17 +27,19 @@ fun CompostInfo(
             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
             contentDescription = null
         )
-        Spacer(Modifier.width(4.dp))
+        Spacer(Modifier.width(10.dp))
         Text(
             text = "$totalSoil m3 soil /",
-            fontSize = 10.sp,
+            fontSize = 11.sp,
             maxLines = 1,
-            fontWeight = FontWeight.Light
+            fontWeight = FontWeight.Medium,
+            fontFamily = FontFamily.Cursive
         )
         Text(
             text = "$totalGas m3 CH4",
             fontSize = 11.sp,
-            fontWeight = FontWeight.Light
+            fontWeight = FontWeight.Medium,
+            fontFamily = FontFamily.Cursive
         )
     }
 
