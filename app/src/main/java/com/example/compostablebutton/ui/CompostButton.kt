@@ -31,10 +31,12 @@ fun CompostButton(
 ) {
     val valueColor by animateColorAsState(
         when (percentFullState) {
-            PercentFullState.Default -> containerState.valueColor
+            PercentFullState.Default -> null
             PercentFullState.Increasing -> Color(0xFF109877)
             PercentFullState.Decreasing -> Color(0xFFD03A3A)
-        }
+        }?.takeIf {
+            containerState == ContainerState.Loading
+        } ?: containerState.valueColor
     )
 
     OutlinedButton(
