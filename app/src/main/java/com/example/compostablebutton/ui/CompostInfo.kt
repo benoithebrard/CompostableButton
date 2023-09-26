@@ -18,7 +18,6 @@ import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 
 @Composable
 fun CompostInfo(
-    modifier: Modifier = Modifier,
     totalSoil: Int = 0,
     totalGas: Int = 0
 ) {

@@ -20,7 +20,7 @@ fun CompostPile(
     ) {
         StatefulCompostButton(modifier.width(150.dp), pileId)
         Spacer(Modifier.width(10.dp))
-        StatefulCompostInfo(modifier, pileId)
+        StatefulCompostInfo(pileId)
     }
 
 }

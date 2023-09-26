@@ -1,12 +1,10 @@
 package com.example.compostablebutton.state
 
-import androidx.compose.ui.graphics.Color
+enum class PercentFullState {
 
-enum class PercentFullState(val color: Color) {
+    Default,
 
-    Default(Color(0xD03A3A)),
+    Increasing,
 
-    Increasing(Color(0xD03A3A)),
-
-    Decreasing(Color(0x109877))
+    Decreasing
 }

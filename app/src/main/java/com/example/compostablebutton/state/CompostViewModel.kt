@@ -10,8 +10,6 @@ import kotlinx.coroutines.launch
 class CompostViewModel : ViewModel() {
 
     private val _piles = createPiles().toMutableStateList()
-    val piles: List<PileState>
-        get() = _piles
 
     fun getPileOrNull(pileId: String): PileState? {
         return _piles.find { it.id == pileId }
