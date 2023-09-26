@@ -60,7 +60,9 @@ fun CompostButton(
         animationSpec = repeatable(
             iterations = 6,
             repeatMode = RepeatMode.Reverse,
-            animation = tween(500)
+            animation = if (percentFullState == PercentFullState.Decreasing) {
+                tween(500)
+            } else snap(0)
         )
     )
 
@@ -74,7 +76,9 @@ fun CompostButton(
         animationSpec = repeatable(
             iterations = 6,
             repeatMode = RepeatMode.Reverse,
-            animation = tween(500)
+            animation = if (percentFullState == PercentFullState.Increasing) {
+                tween(500)
+            } else snap(0)
         )
     )
 
