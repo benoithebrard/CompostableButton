@@ -14,7 +14,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +46,14 @@ fun CompostButton(
         PercentFullState.Decreasing -> Color(0xFFD03A3A)
     }?.takeIf {
         containerState == ContainerState.Loading
+    } ?: containerState.valueColor
+
+    val arrowColor = when (percentFullState) {
+        PercentFullState.Default -> null
+        PercentFullState.Increasing -> Color(0xFF109877)
+        PercentFullState.Decreasing -> Color(0xFFD03A3A)
+    }?.takeUnless {
+        containerState == ContainerState.Optimal
     } ?: containerState.valueColor
 
     val pxToMove = with(LocalDensity.current) {
@@ -158,6 +168,7 @@ fun CompostButton(
                 ) {
                     Image(
                         painter = painterResource(R.drawable.ic_arrow_percent_decrease),
+                        colorFilter = ColorFilter.tint(arrowColor, blendMode = BlendMode.SrcAtop),
                         contentDescription = "percent decrease",
                         modifier = Modifier
                             .padding(bottom = 4.dp, end = 4.dp)
@@ -171,6 +182,7 @@ fun CompostButton(
                 ) {
                     Image(
                         painter = painterResource(R.drawable.ic_arrow_percent_increase),
+                        colorFilter = ColorFilter.tint(arrowColor, blendMode = BlendMode.SrcAtop),
                         contentDescription = "percent increase",
                         modifier = Modifier
                             .padding(top = 4.dp, end = 4.dp)

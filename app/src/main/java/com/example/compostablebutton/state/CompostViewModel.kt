@@ -42,7 +42,7 @@ class CompostViewModel : ViewModel() {
     }
 
     private fun createPiles() = listOf(
-        PileState("0", "apples crumbles cinnamon roll"),
+        PileState("0", "apples crumble cinnamon roll"),
         PileState("1", "bananas"),
         PileState("2", "kiwis"),
         PileState("3", "bread"),
