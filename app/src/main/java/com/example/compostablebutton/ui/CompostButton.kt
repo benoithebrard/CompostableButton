@@ -1,19 +1,23 @@
 package com.example.compostablebutton.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compostablebutton.R
 import com.example.compostablebutton.state.ContainerState
 import com.example.compostablebutton.state.PercentFullState
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
@@ -69,13 +73,23 @@ fun CompostButton(
                     color = containerState.nameColor
                 )
             }
-            Spacer(modifier = Modifier.size(4.dp))
             Box {
                 Text(
-                    text = "$percentFull%",
+                    text = "$percentFull",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
-                    color = valueColor
+                    color = valueColor,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+                Image(
+                    painter = painterResource(R.drawable.ic_arrow_percent_decrease),
+                    contentDescription = "",
+                    modifier = Modifier.align(Alignment.BottomEnd)
+                )
+                Image(
+                    painter = painterResource(R.drawable.ic_arrow_percent_increase),
+                    contentDescription = "",
+                    modifier = Modifier.align(Alignment.TopEnd)
                 )
             }
         }
