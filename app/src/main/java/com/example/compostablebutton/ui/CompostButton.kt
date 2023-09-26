@@ -1,5 +1,6 @@
 package com.example.compostablebutton.ui
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -8,19 +9,24 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compostablebutton.R
 import com.example.compostablebutton.state.ContainerState
 import com.example.compostablebutton.state.PercentFullState
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
+import kotlin.math.roundToInt
 
 @Composable
 fun CompostButton(
@@ -38,6 +44,38 @@ fun CompostButton(
     }?.takeIf {
         containerState == ContainerState.Loading
     } ?: containerState.valueColor
+
+    val pxToMove = with(LocalDensity.current) {
+        4.dp.toPx().roundToInt()
+    }
+
+    val offset by animateIntOffsetAsState(
+        targetValue = if (percentFullState == PercentFullState.Decreasing) {
+            IntOffset(pxToMove, pxToMove)
+        } else {
+            IntOffset.Zero
+        },
+        label = "offset",
+        animationSpec = repeatable(
+            iterations = 6,
+            repeatMode = RepeatMode.Reverse,
+            animation = tween(500)
+        )
+    )
+
+    val alpha by animateFloatAsState(
+        targetValue = if (percentFullState == PercentFullState.Decreasing) {
+            1f
+        } else {
+            0f
+        },
+        label = "alpha",
+        animationSpec = repeatable(
+            iterations = 6,
+            repeatMode = RepeatMode.Reverse,
+            animation = tween(500)
+        )
+    )
 
     OutlinedButton(
         enabled = containerState != ContainerState.Full,
@@ -81,14 +119,20 @@ fun CompostButton(
                     color = valueColor,
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
-                Image(
-                    painter = painterResource(R.drawable.ic_arrow_percent_decrease),
-                    contentDescription = "",
-                    modifier = Modifier.align(Alignment.BottomEnd)
-                )
+                if (percentFullState == PercentFullState.Decreasing) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_arrow_percent_decrease),
+                        contentDescription = "percent decrease",
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(bottom = 4.dp, end = 4.dp)
+                            .offset { offset }
+                            .alpha(alpha)
+                    )
+                }
                 Image(
                     painter = painterResource(R.drawable.ic_arrow_percent_increase),
-                    contentDescription = "",
+                    contentDescription = "percent increase",
                     modifier = Modifier.align(Alignment.TopEnd)
                 )
             }

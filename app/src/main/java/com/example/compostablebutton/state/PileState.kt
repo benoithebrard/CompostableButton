@@ -8,7 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private const val MAX_ANIMATION_TIME_MS = 5000L
+private const val MAX_ANIMATION_TIME_MS = 10000L
 
 data class PileState(
     val id: String,
