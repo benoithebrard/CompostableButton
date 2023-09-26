@@ -1,5 +1,6 @@
 package com.example.compostablebutton.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -49,13 +50,13 @@ fun CompostButton(
         4.dp.toPx().roundToInt()
     }
 
-    val offset by animateIntOffsetAsState(
+    val decreaseOffset by animateIntOffsetAsState(
         targetValue = if (percentFullState == PercentFullState.Decreasing) {
             IntOffset(pxToMove, pxToMove)
         } else {
             IntOffset.Zero
         },
-        label = "offset",
+        label = "decrease offset",
         animationSpec = repeatable(
             iterations = 6,
             repeatMode = RepeatMode.Reverse,
@@ -63,13 +64,41 @@ fun CompostButton(
         )
     )
 
-    val alpha by animateFloatAsState(
+    val increaseOffset by animateIntOffsetAsState(
+        targetValue = if (percentFullState == PercentFullState.Increasing) {
+            IntOffset(pxToMove, -pxToMove)
+        } else {
+            IntOffset.Zero
+        },
+        label = "increase offset",
+        animationSpec = repeatable(
+            iterations = 6,
+            repeatMode = RepeatMode.Reverse,
+            animation = tween(500)
+        )
+    )
+
+    val decreaseAlpha by animateFloatAsState(
         targetValue = if (percentFullState == PercentFullState.Decreasing) {
             1f
         } else {
             0f
         },
-        label = "alpha",
+        label = "decrease alpha",
+        animationSpec = repeatable(
+            iterations = 6,
+            repeatMode = RepeatMode.Reverse,
+            animation = tween(500)
+        )
+    )
+
+    val increaseAlpha by animateFloatAsState(
+        targetValue = if (percentFullState == PercentFullState.Increasing) {
+            1f
+        } else {
+            0f
+        },
+        label = "increase alpha",
         animationSpec = repeatable(
             iterations = 6,
             repeatMode = RepeatMode.Reverse,
@@ -119,22 +148,32 @@ fun CompostButton(
                     color = valueColor,
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
-                if (percentFullState == PercentFullState.Decreasing) {
+                this@Row.AnimatedVisibility(
+                    visible = percentFullState == PercentFullState.Decreasing,
+                    modifier = Modifier.align(Alignment.BottomEnd)
+                ) {
                     Image(
                         painter = painterResource(R.drawable.ic_arrow_percent_decrease),
                         contentDescription = "percent decrease",
                         modifier = Modifier
-                            .align(Alignment.BottomEnd)
                             .padding(bottom = 4.dp, end = 4.dp)
-                            .offset { offset }
-                            .alpha(alpha)
+                            .offset { decreaseOffset }
+                            .alpha(decreaseAlpha)
                     )
                 }
-                Image(
-                    painter = painterResource(R.drawable.ic_arrow_percent_increase),
-                    contentDescription = "percent increase",
+                this@Row.AnimatedVisibility(
+                    visible = percentFullState == PercentFullState.Increasing,
                     modifier = Modifier.align(Alignment.TopEnd)
-                )
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_arrow_percent_increase),
+                        contentDescription = "percent increase",
+                        modifier = Modifier
+                            .padding(top = 4.dp, end = 4.dp)
+                            .offset { increaseOffset }
+                            .alpha(increaseAlpha)
+                    )
+                }
             }
         }
     }
