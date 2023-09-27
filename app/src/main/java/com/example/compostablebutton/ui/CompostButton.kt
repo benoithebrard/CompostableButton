@@ -31,6 +31,8 @@ import com.example.compostablebutton.state.PercentFullState
 import com.example.compostablebutton.ui.theme.CompostableButtonTheme
 import kotlin.math.roundToInt
 
+private const val DURATION_ANIMATION_STEP_MS = 500
+
 @Composable
 fun CompostButton(
     modifier: Modifier = Modifier,
@@ -56,13 +58,13 @@ fun CompostButton(
         containerState == ContainerState.Optimal
     } ?: containerState.valueColor
 
-    val pxToMove = with(LocalDensity.current) {
+    val offsetPx = with(LocalDensity.current) {
         4.dp.toPx().roundToInt()
     }
 
     val decreaseOffset by animateIntOffsetAsState(
         targetValue = if (percentFullState == PercentFullState.Decreasing) {
-            IntOffset(pxToMove, pxToMove)
+            IntOffset(offsetPx, offsetPx)
         } else {
             IntOffset.Zero
         },
@@ -71,14 +73,14 @@ fun CompostButton(
             iterations = 6,
             repeatMode = RepeatMode.Reverse,
             animation = if (percentFullState == PercentFullState.Decreasing) {
-                tween(500)
+                tween(DURATION_ANIMATION_STEP_MS)
             } else snap(0)
         )
     )
 
     val increaseOffset by animateIntOffsetAsState(
         targetValue = if (percentFullState == PercentFullState.Increasing) {
-            IntOffset(pxToMove, -pxToMove)
+            IntOffset(offsetPx, -offsetPx)
         } else {
             IntOffset.Zero
         },
@@ -87,7 +89,7 @@ fun CompostButton(
             iterations = 6,
             repeatMode = RepeatMode.Reverse,
             animation = if (percentFullState == PercentFullState.Increasing) {
-                tween(500)
+                tween(DURATION_ANIMATION_STEP_MS)
             } else snap(0)
         )
     )
@@ -102,7 +104,7 @@ fun CompostButton(
         animationSpec = repeatable(
             iterations = 6,
             repeatMode = RepeatMode.Reverse,
-            animation = tween(500)
+            animation = tween(DURATION_ANIMATION_STEP_MS)
         )
     )
 
@@ -116,7 +118,7 @@ fun CompostButton(
         animationSpec = repeatable(
             iterations = 6,
             repeatMode = RepeatMode.Reverse,
-            animation = tween(500)
+            animation = tween(DURATION_ANIMATION_STEP_MS)
         )
     )
 
