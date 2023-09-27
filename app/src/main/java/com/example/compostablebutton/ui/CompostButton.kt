@@ -1,6 +1,7 @@
 package com.example.compostablebutton.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -42,21 +43,25 @@ fun CompostButton(
     percentFullState: PercentFullState = PercentFullState.Default,
     onAddCompost: () -> Unit = {}
 ) {
-    val valueColor = when (percentFullState) {
-        PercentFullState.Default -> null
-        PercentFullState.Increasing -> Color(0xFF109877)
-        PercentFullState.Decreasing -> Color(0xFFD03A3A)
-    }?.takeIf {
-        containerState == ContainerState.Loading
-    } ?: containerState.valueColor
+    val valueColor by animateColorAsState(
+        targetValue = when (percentFullState) {
+            PercentFullState.Default -> null
+            PercentFullState.Increasing -> Color(0xFF109877)
+            PercentFullState.Decreasing -> Color(0xFFD03A3A)
+        }?.takeIf {
+            containerState == ContainerState.Loading
+        } ?: containerState.valueColor
+    )
 
-    val arrowColor = when (percentFullState) {
-        PercentFullState.Default -> null
-        PercentFullState.Increasing -> Color(0xFF109877)
-        PercentFullState.Decreasing -> Color(0xFFD03A3A)
-    }?.takeUnless {
-        containerState == ContainerState.Optimal
-    } ?: containerState.valueColor
+    val arrowColor by animateColorAsState(
+        targetValue = when (percentFullState) {
+            PercentFullState.Default -> null
+            PercentFullState.Increasing -> Color(0xFF109877)
+            PercentFullState.Decreasing -> Color(0xFFD03A3A)
+        }?.takeUnless {
+            containerState == ContainerState.Optimal
+        } ?: containerState.valueColor
+    )
 
     val offsetPx = with(LocalDensity.current) {
         4.dp.toPx().roundToInt()

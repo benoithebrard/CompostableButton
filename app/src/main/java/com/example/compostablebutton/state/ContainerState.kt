@@ -41,6 +41,6 @@ enum class ContainerState(
 
 fun PileState.toContainerState(): ContainerState = when {
     percentFull < 65 -> ContainerState.Loading
-    percentFull < 85 -> ContainerState.Optimal
+    percentFull < 75 -> ContainerState.Optimal
     else -> ContainerState.Full
 }
